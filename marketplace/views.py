@@ -1,8 +1,21 @@
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
-from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
+from .serializers import ListingSerializer
+from .models import Listing
 
-class ListingList(APIView)
+class ListingListView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def get(self, request):
+        listings = Listing.objects.all()
+        serializer = ListingSerializer(listings, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        file_serializer = ListingSerializer(data=request.data)
+        if file_serializer.is_valid():
+            file_serializer.save()
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
