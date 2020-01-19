@@ -5,11 +5,16 @@ from rest_framework import status
 from .serializers import ListingSerializer
 from .models import Listing
 
+
 class ListingListView(APIView):
     parser_classes = (MultiPartParser, FormParser)
+
     def get(self, request):
         listings = Listing.objects.all()
         serializer = ListingSerializer(listings, many=True)
+        for listing_entry in serializer.data:
+            listing_entry["listing_image"] = request.build_absolute_uri('/')[:-1].strip("/") + \
+                                             "/" + listing_entry["listing_image"]
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):

@@ -25,7 +25,7 @@ SECRET_KEY = 'a4hl7k+xs84pu0k3cpj248+8*j0knbr&rp@_@#-4tckbc#emon'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['marketplace.compositegrid.com']
+ALLOWED_HOSTS = ['marketplace.compositegrid.com', 'localhost', '10.24.0.10']
 
 
 # Application definition
