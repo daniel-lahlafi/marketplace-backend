@@ -40,7 +40,8 @@ class ListingListView(APIView):
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request):
-        listing = Listing.objects.get(listing_id=request.DELETE.get('listingId', None))
+    def delete(self, request, pk):
+        print(pk)
+        listing = Listing.objects.get(listing_id=pk)
         listing.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
