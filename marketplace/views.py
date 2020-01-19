@@ -12,9 +12,12 @@ class ListingListView(APIView):
     def get(self, request):
         listings = Listing.objects.all()
         serializer = ListingSerializer(listings, many=True)
+        print()
         for listing_entry in serializer.data:
             listing_entry["listing_image"] = request.build_absolute_uri('/')[:-1].strip("/") + \
-                                             "/" + listing_entry["listing_image"]
+                                             listing_entry["listing_image"]
+
+        print(serializer.data)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
