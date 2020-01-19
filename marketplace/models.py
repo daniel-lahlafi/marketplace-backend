@@ -1,8 +1,10 @@
 from django.db import models
 import uuid
 
+
 def upload_location(instance, filename):
     return f"image/{uuid.uuid4()}.{filename.split('.')[-1]}"
+
 
 class Listing(models.Model):
     listing_id = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
